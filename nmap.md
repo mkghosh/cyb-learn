@@ -119,4 +119,6 @@ EXAMPLES:
   nmap -v -A scanme.nmap.org
   nmap -v -sn 192.168.0.0/16 10.0.0.0/8
   nmap -v -iR 10000 -Pn -p 80
-SEE THE MAN PAGE (https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
+SEE THE [MAN PAGE](https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
+
+
