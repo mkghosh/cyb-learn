@@ -5,13 +5,19 @@ Forensics is the application of science to investigate crimes and establish fact
 
 # Tools for digital forensics
 1. pdfinfo used to read metadata from a pdf file
-    $pdfinfo doc.pdf
-
+- $pdfinfo doc.pdf
 2. exiftool used to read and write metadata to a different range of files e.g. JPG, JPEG etc
-    $exiftool name.jpg
-
+- $exiftool name.jpg
 3. file used to see an overview of the metadata present in any file.
-    $file filename
+- $file filename
+4. **dd and dc3dd:** These command-line utilities create exact bit-by-bit copies of hard drives. While dd is the foundational tool dc3dd offers additional features such as progress indicators and error summaries, making it more suitable for forensic tasks.
+5. **Guymager:** This graphical disk imaging tool for Linux supports various disk image formats, provides a user-friendly interface, and maintains forensic integrity. It also provides write-blocking functionality and can generate checksums to verify data integrity.
+6. **FTK Imager:** This forensic imaging tool offers a comprehensive approach to disk imaging. It supports various media types, such as hard drives, CDs, DVDs, and USB drives. Some of its functionalities allow data previewing and provide multiple output formats.
+7. **Volatility:** This robust framework is essential for extracting digital artefacts from bolatile memory (RAM) dumps. Its usage is perfect for analysing memory dumps to uncover running processes, open network connections, and other volatile data that might be lost in a cold system analysis.
+8. **The Sleuth Kit (TSK):** This is a collection of command-line tools for analysing disk images and recovering deleted data with granular control. TSK tools like fls and icat are used to list files and directories, while other components provide advanced analysis capabilities.
+9. **Autopsy:** Built on top of TSK, Autopsy provides a graphical interface for TSK funcitons, making it more accessible to non-technical users. It offers keyword searches, timeline analysis, and file carving features.
+10. **EnCase:** EnCase is a professional-grade forensic tool used for deep forensic investigations. It has extensive capabilities for disk imaging, data recovery, and analysis.
+
 
 # Process
 Step 1. **Obtaining & imaging forensic data:** Imaging is a very important and crucial step whenever a forensic examiner investigates a case. The purpose of imaging is to copy and create a replica of every single bit of original data to use it for analysis while ensuring that the original data remains untouched. This ensures the integrity and preservation of the data throughout the analysis process.
@@ -82,4 +88,17 @@ A typical order from the most bolatile to the leat volatile might look as follow
 - **Remote Logging and Monitoring Data:** These logs are relatively stable and less likely to change.
 - **Physical Configuration and Network:** Documenting this data helps analysts understand the infrasture and the context of the investigation.
 - **Archival media:** This data is stored offline such as tables, and optical discs.
+
+# Guidelines to follow during forensics
+- **Document every step:** No matter how small an action is during the forensic analysis, it must be documented and aligned with whoever is handling the evidence, what time was taken, and the reasons behind their access to the evidence.
+- **Secure transport:** Tamper-proof packaging should be utilised to transport disk drives and other evidence securely.
+- **Hasing:** Using cryptographic hash functions such as MD5 and SHA-1 to create unique data fingerprints and verify that is has not been altered.
+- **Write Blocking:** Using write blockers helps prevent any modification of the original data.
+
+# Skills need to be successful in forensics
+- Keyword Searching
+- File signature analysis 
+- Registry Analysis 
+- Email Extraction and 
+- Web history extraction
 
