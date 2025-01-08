@@ -16,7 +16,7 @@ A TLD is the most righthand part of a domain name. So, for example, the tryhackm
 
 Now a days there is a huge demand for gTLD that is why there are a lot of new gTLD's are available out there. You can find the full list of gTLD's from [here](https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
 
-## Second Level Domain 
+## Second Level Domain
 
 Taking [tryhackme.com](https://tryhackme.com) as an example, the .com part is the TLD, and tryhackme is the second level domain. When registering a domain name, the second-level domain is limited to 63 characters + the TLD and can only use a-z 0-9 and hyphens (cannot start or end with hyphens or have consecutive hyphens).
 
@@ -26,7 +26,7 @@ A subdomain sits on the left-hand side of the Second-Level Domain using a period
 
 ## DNS record types
 
-DNS isn't just for websites though, and multiple types of DNS record exist. We'll go over some of the most common ones that you're likely to come across. 
+DNS isn't just for websites though, and multiple types of DNS record exist. We'll go over some of the most common ones that you're likely to come across.
 
 ## A Record
 
@@ -61,7 +61,7 @@ and so on.
 
 ## Details of HTTP request
 
-- HTTP stands for Hypertext Transfer Protocol. It is used whenever you view a website, developed by Tim Berners-Lee and his team between 1989-1991. 
+- HTTP stands for Hypertext Transfer Protocol. It is used whenever you view a website, developed by Tim Berners-Lee and his team between 1989-1991.
 - HTTPS stands for Hypertext Transfer Protocol Secure. It is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
 - URL stands for Uniform Resource Locator. If you've used the internet, you've used a URL before. A URL is predominantly and instruction on how to access a resource on the internet.
 
@@ -87,7 +87,7 @@ An URL makes up of 8 components
 ## Network devices
 
 - Hubs: Hubs are used to connec multiple devices in a network. They're less likely to be seen in business or corporate networks than in home networks. Hubs are wired devices and are not as smart as switches or routers.
-- Switch: Rather that using a hub, you might consider using a switch, or what is also known as an intelligent hub. Switches are wired devices that know the addresses of the devices connected to them and route traffic to that port/device rather than retransmitting to all devices. <br/>
+- Switch: Rather that using a hub, you might consider using a switch, or what is also known as an intelligent hub. Switches are wired devices that know the addresses of the devices connected to them and route traffic to that port/device rather than retransmitting to all devices.
 Offering greater efficiency for traffic delivery and improving the overall throughput of data, switches are smarter than hubs, but not as smart as routers. Switches can also create separate broadcast domains when used to create VLANs.
 - Router: Routers are used to control traffic flow on networks and are often used to connect similar networks and control traffic flow between them. Routers can be wired or wireless and can connect multiple switches. Smarter than hubs and switches, routers determine the most efficient "route" for the traffic to flow across the network.
 - Firewall: Firewalls are essential tools in managing and controlling network traffic and protecting the network. A firewall is a network device used to filter traffic. It is typically deployed between a private network and the internet, but it can also be deployed between departments (segmented networks) within an organization (overall network). Firewalls filter traffic based on a defined set of rules, also called filters or access control lists.
@@ -102,4 +102,4 @@ Offering greater efficiency for traffic delivery and improving the overall throu
 - Microsegmentation is crucial in shared environments, such as the cloud, where more than one customer's data and functionality might reside on the same device(s), and where third-party personnel (administrators/technicians who work for the cloud provider, not the customer) might have physical access to the devices.
 - Microsegmentation allows the organization to limit which business functions, units, offices, or departments can communicate with others, to enforce the concept of least privilege. For instance, the Human Resources office probably has employee data that no other business unit should have access to, such as employee home address, salary, and medical records. Microsegmentation, like VLANs, can make HR its own distinct IT enclave, so that sensitive data is not available to other business units, thus reducing the risk of exposure.
 - In modern environments, microsegmentation is available because of virtualization is available because of virtualization and software-defined networking (SDN) technologies. In the cloud, the tools for applying this strategy are often called "virtual private networks (VPN)" or "security groups."
-- Even in your home, microsegmentation can be used to separate computers from smart TVs, air conditioning, and smart appliances, which can be connected and have vulnerabilities.
+- Even in your home, microsegmentation can be used to separate computers from smart TVs, air conditioning, and smart appliances, which can be connected and have vulnerabilities
