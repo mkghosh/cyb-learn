@@ -11,3 +11,11 @@ Entriopy represents the amount of randomness or unpredictability in a system and
 ## Cryptographic Keys
 
 Cryptographic keys are secret values used in algorithms to encrypt and decrypt data, ensuring confidentiality, integrity, and authentication. They are critical components in symmetric and asymmetric encryption methods and must be securely generated and manged to prevent unauthorised access. The strength of a cryptographic key depends on its length and randomness.
+
+## Session Tokens and Unique Identifiers
+
+Session tokens and unique identifiers are used to maintain user sessions and track interactions in web applications. They must be securely generated with sufficient randomness and uniqueness to prevent token prediction and session hijacking. Proper management and protection of these tokens are essential to ensure secure user authentication and autorisation.
+
+## Seeding
+
+Seeding refers to providing an initial value, known as a seed, to a secure cryptographic function to generate a sequence of random-looking numbers. While these secure functions produce numbers that appear random, the sequence is entirely determined by the seed, meaning the same seed will always result in the same sequence.
