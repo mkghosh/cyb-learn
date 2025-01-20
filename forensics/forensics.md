@@ -1,9 +1,11 @@
-# Introduction
+# Forensics document
+
+## Introduction
 Performing live forensic file system analysis is often an early part of incident response and is crucial in assessing and determining potential security breaches. This process involves examining digital artefacts, system logs, users, and file structures to uncover evidence of unauthorised access, malicious activities, or data compromise.
 
 Forensics is the application of science to investigate crimes and establish facts. With the use and spread of digital systems, such as computers and smartphones, a new branch of forensics was born to investigate related crimes: computer forensics, which later evolved into, digital forensics.
 
-# Tools for digital forensics
+## Tools for digital forensics
 1. pdfinfo used to read metadata from a pdf file
 - $pdfinfo doc.pdf
 2. exiftool used to read and write metadata to a different range of files e.g. JPG, JPEG etc
@@ -17,9 +19,9 @@ Forensics is the application of science to investigate crimes and establish fact
 8. **The Sleuth Kit (TSK):** This is a collection of command-line tools for analysing disk images and recovering deleted data with granular control. TSK tools like fls and icat are used to list files and directories, while other components provide advanced analysis capabilities.
 9. **Autopsy:** Built on top of TSK, Autopsy provides a graphical interface for TSK funcitons, making it more accessible to non-technical users. It offers keyword searches, timeline analysis, and file carving features.
 10. **EnCase:** EnCase is a professional-grade forensic tool used for deep forensic investigations. It has extensive capabilities for disk imaging, data recovery, and analysis.
+11. **[LiME](https://github.com/504ensicsLabs/LiME):** LiME is forensics tool for dumping volatile memory in linux.
 
-
-# Process
+## Process
 Step 1. **Obtaining & imaging forensic data:** Imaging is a very important and crucial step whenever a forensic examiner investigates a case. The purpose of imaging is to copy and create a replica of every single bit of original data to use it for analysis while ensuring that the original data remains untouched. This ensures the integrity and preservation of the data throughout the analysis process.
 
 Step 2. **Forensic Request:** A forensic request is a request to investigate a case within a given outline, including the purpose, scope, authority, methodology, expected deliverables, and confidentiality measures. This outline provides a clear understanding of the case.
@@ -34,7 +36,7 @@ Step 6. **Forensic Reporting:** Creating a detailed report about the case findin
 
 Step 7. **Case level Analysis:** The final analysis by studying and reviewing the case again with all findings and evidence to made understanding and to find out the final conclusion.
 
-# Types of forensics
+## Types of forensics
 There are several types of digital forensics that can be used in cybersecurity, including:
 ## Computer forensics
 It has two distinct categories 
@@ -68,7 +70,7 @@ Cold vs. Live Forensics
 |Access to Encrypted Files|Risk of losing access if passwords are reset|Immediate access while the system is running|
 |
 
-# Common Scenarios for cold system forensics
+## Common Scenarios for cold system forensics
 - **Risk of modifying evidence:** As live analysis can alter critical evidence, cold system forensics must ensure the evidence remains unaltered and admissible in court.
 - **Comprehensive data capture:** This is necessary when a thorough examination of all data is necessary.
 - **Incident response:** To preserve evidence from compromised systems without risk of alteration, shutting down a compromised server and performing cold analysis ensures the evidence ramians intact.
@@ -101,4 +103,3 @@ A typical order from the most bolatile to the leat volatile might look as follow
 - Registry Analysis 
 - Email Extraction and 
 - Web history extraction
-
