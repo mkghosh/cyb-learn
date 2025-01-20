@@ -102,3 +102,14 @@ A typical order from the most bolatile to the leat volatile might look as follow
 - Email Extraction and 
 - Web history extraction
 
+# SIEM 
+- SIEM stands for Security Information and Event Management System
+- IDS stands for Intrusion Detection System
+- IPS stands for Intrusion Prevention System
+- EDR stands for Endpoint Detection and Response
+- TTPs stands for Tactics, Techniques, and Procedures
+- SOC stands for Security Operations Centre
+
+To see the reputation of an IP address we can use 
+[abuseIPDB](https://www.abuseipdb.com)
+
