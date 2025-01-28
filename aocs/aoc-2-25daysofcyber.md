@@ -5,6 +5,8 @@
 Crismas Crisis
 
 To decode hex string to ascii text in terminal we can use
-$echo "hex-string" | xxd -r -p
+
+*$echo "hex-string" | xxd -r -p*
 
 ## Day 2
+
