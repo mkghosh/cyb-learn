@@ -219,3 +219,49 @@ Now we get the reverse shell to the system and the user is root.
 
 ## Privilege Escalation using PATH
 
+If a folder for which your user has write permission is located in the path, you could potentially hijack an application to run a script. PATH in Linux is an environmental variable that tells the operating system where to search for executables. For any command that is not built into the shell or that is not defined with an absolute path, Linux will start searching in folders defined under PATH. (PATH is the environmental variable we're talking about here, path is the location of a file)
+
+First explore these
+1. What folders are located under $PATH
+2. Does your current user have write privileges for any of these folders?
+3. Can you modify $PATH?
+4. Is there a script/application you can start that will be affected by this vulmerability?
+
+We will try to use this code below
+
+```c
+#include<unistd.h>
+void main() 
+{
+    setuid(0);
+    setgid(0);
+    system("thm");
+}
+```
+
+So let us first find the writable directories for us we can use the command below
+
+```bash
+$find / -writable 2>/dev/null
+```
+
+This will output a lot of lines which is very hard to read and get a hang of it. So, we need to cut it and then sort with unique 
+
+```bash
+$find / -writable 2>/dev/null | cut -d "/" -f 2 | sort -u
+```
+
+We have seen that we have a home dir to write to let us grep it.
+
+```bash
+$find / -writable 2>/dev/null | grep home | sort -u
+```
+We have write access to an unusual home directory lets switch to that one. And we can see that we have 2 files there one is test and the other one is thm.py from thm.py we can see that it calls thm binary as said in the walkthrough so we need to create a bin with name thm we can simply do that by
+
+```bash
+$echo "/bin/bash" > thm
+$chmod +x thm
+```
+
+Now if we run ```./test``` we get the root shell.
+
