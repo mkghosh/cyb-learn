@@ -121,3 +121,62 @@ EXAMPLES:
   nmap -v -iR 10000 -Pn -p 80
 SEE THE [MAN PAGE](https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
 
+## Nmap Live host discovery
+
+ARP (Address resolution protocol) request is bound within the subnet it can't be routed to other subnet.
+
+## Scanning using nmap
+
+We can use lists of hosts seperated by space to specify target hosts like below
+
+- list: $nmap Machine_ip scanme.nmap.org example.com
+- range: 10.10.10.12-18 will scan 7 ip addresses
+- subent: ip/30 will scan 4 ips
+
+We can also provide a file as input for our list of targets **$nmap -iL list.txt**. To check the list of hosts that nmap will scan, we can use **$nmap -sL targets**. This option will give us a detialed list of the hosts that nmap will scan without scanning them; however, nmap will attempt a reverse-DNS resolution on all the targets to obtain their names. Names might reveal various information to the pentester.
+
+### Discover live host in a network
+
+1. When a privileged user tries to scan targets on a local network (Ethernet), Namap uses ARP requests.
+2. When a privileged user tries to scan targets outside the local network, nmap uses ICMP echo requests, TCP ACK (Acknowledgte) to port 80, TCP SYN (SYnchronize) to port 443, and ICMP timestamp request.
+3. When an unprivileged user tries to scan targets outhside the local network, nmap resorts to a TCP 3-way handshake by sending SYN packets to ports 80 and 443.
+
+Nmap, by default, uses a ping scan to find live hosts, then proceeds to scan live hosts only. If we want to use nmap to discover online hosts without port-scanning the live systems, we can issue **$nmap -sn targets**. 
+
+If we want nmap to perform an ARP scan without port-scanning, we can use **$nmap -PR -sn targets**
+
+## ARP-SCAN
+
+arp-scan is an utility built around arp queries; it provides many options to customize our scan. One popular choice is **arp-scan --localhost or simply arp-scan -l**. This command will send ARP queries to all valid IP addresses on the local network. If your system has more than one interface and you are interested in discovering the live hosts on one of them, you can specify the interface using **-I**. For instance, **sudo arp-scan -I eth0 -l** will send ARP queries for all valid IP addresses on the eth0 interface.
+
+
+## ICMP host discovery
+
+To use ICMP echo we should add the switch **-PE** to nmap like **$sudo nmap -PE -sn target** (-sn for not to start port scanning). As, ICMP echo may be blocked in many system we can use ICMP Timestamp (ICMP Type 13) and check whether it will get a Timestamp reply (ICMP Type 14). Adding **-PP** option tells nmap to use ICMP timestamp requests like **$sudo nmap -PP -sn target**
+
+Similarly, namp uses address mask queries (ICMP Type 17) and checks whether it gets an address mask reply (ICMP Type 18). This scan can be enabled with the option **-PM** like **$sudo nmap -PM -sn target** 
+
+To know more about ICMP hope over [here](https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml)
+
+## TCP UDP host discovery
+
+If you want to nmap to use TCP SYN ping, you can do so via the option **-PS** followed by the port number, range, list, or a combination of them. For example **-PS80** will target port 80 while **-PS21-25** will target ports 21 through 25. Finally **-PS80,443,8080** will target the three ports.
+
+Privileged users (root or sudoers) can send TCP SYN packets and don't need to complete the TCP 3-way handshake even if the port is open.
+
+To send an ACK packet we can use **-PA** flag to nmap, but we must use sudo or root to run nmap to be able to send ACK packet to the targets, otherwise it will do a 3-way handshake.
+
+We can also send an UDP Ping packet to discover live hosts on a network. Contrary to the TCP SYN ping, sending a UDP packet to an open port is not expected to lead to any reply. However, if we send a UDP packet to a closed port, we expect to get an ICMP port unreachable packet; this indicates that the target system is up and available. We can send UDP Ping like **$nmap -PU -sn target**
+
+
+### Masscan
+Masscan uses a similar approach to discover the available systems. However, to finish its network scan quickly, Masscan is quite aggressive with the rate of packtes it generates. The syntax is auite similar: **-p** can be followed by a port number, list, or range. consider the following EXAMPLES
+
+- masscan Target/24 -p443
+- masscan Target/24 -p80,443
+- masscan Target/24 -p22-30
+- masscan Target/24 --tcp-ports 100
+
+### Reverse-DNS lookup
+
+Nmap's default behaviour is to use reverse-DNS online hosts. Because the hostnames can reveal a lot, this can be a helpful step. However, if you don't want to send such DNS queries, you use -n to skip this step. By default, Namp will look up online hosts; however, you can use the option **-R** to query the DNS server even for offline hosts. If you want to use a specific DNS server, you can add the **--dns-servers DNS_SERVER** option.
