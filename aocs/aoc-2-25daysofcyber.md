@@ -16,8 +16,14 @@ When you have the ability to upload files to a server, you have a path straight 
 
 - Double-barrelled extension (e.g .jpg.php)
 
-## Upload files to the server
+### Upload files to the server
 
 To be able to get upload in the server we need to provide id=given_id as get parameter to the url. Then we can bypass the upload filter by using the double-barrelled extension (e.g .jpg.php, .jpeg.php, .png.php) as the site only looks for files with extension .jpg, .jpeg or .png
 
-Now upload the file to the server and 
+Now upload the file to the server and exploit the machine.
+
+## Day 3
+
+### Burpsuite - Burp intruder
+
+We can use burpsuite's burp intruder feature to attack brute force with our custom values.
