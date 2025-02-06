@@ -30,14 +30,13 @@ Vulnerability management is the process of evaluating, categorising and ultimate
 
 After all, only approximately **2%** of vulnerabilities only ever end up being exploited. Instead, it is all about addressing the most dangerous vulnerabilities and reducing the likelihood of an attack vector being used to exploit a system.
 
-
 Two different scoring systems are discussed below:
 
 ### Common Vulnerability Scoring System
 
-First introduced in 2005, the Common Vulnerability Scoring System (or CVSS) is a very popular framework for vulnerability scoring and has three major iterations. As it stands, the current version is CVSSv4 
+First introduced in 2005, the Common Vulnerability Scoring System (or CVSS) is a very popular framework for vulnerability scoring and has three major iterations. As it stands, the current version is CVSSv4
 
-A vulnerability is given a classification (out of five) depending on the score that it has assigned. 
+A vulnerability is given a classification (out of five) depending on the score that it has assigned.
 
 |Rating|Score|
 |---|---|
@@ -52,8 +51,8 @@ A vulnerability is given a classification (out of five) depending on the score t
 
 The VPR framework is a much more modern framework in vulnerability management - developed by Tenable, and inducstry solutions provider for vulnerability management. This framework is considered to be risk-driven; meaning that vulnerabilities are given a score with a heavy focus on the risk a vulnerability poses to the organisation itself, rather that factors such as impact (like with CVSS).
 
-
 VPR uses a similar scoring rage as CVSS, but it does not have None category as with CVSS
+
 |Rating|Score|
 |---|---|
 |Low|0-3.9|
