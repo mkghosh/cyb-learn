@@ -1,4 +1,5 @@
 What is nmap?
+
 - nmap has the elaboration of Network Mapper is an open source tool for network exploration and security auditing. It was designed to rapidly scan large networks, although it works fine against single hosts. Nmap uses raw IP packets in novel ways to determine what hosts are available on the network, what services (application name and version) those hosts are offering, what operating systems (and OS versions) they are running, what type of packet filters/firewalls are in use, and dozens of other characteristics. While Nmap is commonly used for security audits, many systems and network administrators find it useful for routine tasks such as network inventory, managing services upgrade schedules, and monitoring host or service uptime. 
 
 The output from Nmap is a list of scanned targets, with supplemental infomation is the "interesting ports table". That table lists the port number and protocol, service name, and state. The state is either open, filtered, closed, or unfiltered. Open means that an application on the target machine is listening for connections/packets on that port. Filtered means that a firewall, filter, or other network obstacle is blocking the port so that Nmap cannot tell whether it is open or closed. Closed ports have no application listening on them, though tehy could open up at any time. 
@@ -141,7 +142,7 @@ We can also provide a file as input for our list of targets **$nmap -iL list.txt
 2. When a privileged user tries to scan targets outside the local network, nmap uses ICMP echo requests, TCP ACK (Acknowledgte) to port 80, TCP SYN (SYnchronize) to port 443, and ICMP timestamp request.
 3. When an unprivileged user tries to scan targets outhside the local network, nmap resorts to a TCP 3-way handshake by sending SYN packets to ports 80 and 443.
 
-Nmap, by default, uses a ping scan to find live hosts, then proceeds to scan live hosts only. If we want to use nmap to discover online hosts without port-scanning the live systems, we can issue **$nmap -sn targets**. 
+Nmap, by default, uses a ping scan to find live hosts, then proceeds to scan live hosts only. If we want to use nmap to discover online hosts without port-scanning the live systems, we can issue **$nmap -sn targets**.
 
 If we want nmap to perform an ARP scan without port-scanning, we can use **$nmap -PR -sn targets**
 
