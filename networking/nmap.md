@@ -1,7 +1,8 @@
-What is nmap?
-- nmap has the elaboration of Network Mapper is an open source tool for network exploration and security auditing. It was designed to rapidly scan large networks, although it works fine against single hosts. Nmap uses raw IP packets in novel ways to determine what hosts are available on the network, what services (application name and version) those hosts are offering, what operating systems (and OS versions) they are running, what type of packet filters/firewalls are in use, and dozens of other characteristics. While Nmap is commonly used for security audits, many systems and network administrators find it useful for routine tasks such as network inventory, managing services upgrade schedules, and monitoring host or service uptime. 
+# What is nmap?
 
-The output from Nmap is a list of scanned targets, with supplemental infomation is the "interesting ports table". That table lists the port number and protocol, service name, and state. The state is either open, filtered, closed, or unfiltered. Open means that an application on the target machine is listening for connections/packets on that port. Filtered means that a firewall, filter, or other network obstacle is blocking the port so that Nmap cannot tell whether it is open or closed. Closed ports have no application listening on them, though tehy could open up at any time. 
+- nmap has the elaboration of Network Mapper is an open source tool for network exploration and security auditing. It was designed to rapidly scan large networks, although it works fine against single hosts. Nmap uses raw IP packets in novel ways to determine what hosts are available on the network, what services (application name and version) those hosts are offering, what operating systems (and OS versions) they are running, what type of packet filters/firewalls are in use, and dozens of other characteristics. While Nmap is commonly used for security audits, many systems and network administrators find it useful for routine tasks such as network inventory, managing services upgrade schedules, and monitoring host or service uptime.
+
+The output from Nmap is a list of scanned targets, with supplemental infomation is the "interesting ports table". That table lists the port number and protocol, service name, and state. The state is either open, filtered, closed, or unfiltered. Open means that an application on the target machine is listening for connections/packets on that port. Filtered means that a firewall, filter, or other network obstacle is blocking the port so that Nmap cannot tell whether it is open or closed. Closed ports have no application listening on them, though tehy could open up at any time.
 
 The help file for nmap is :
 
@@ -121,4 +122,6 @@ EXAMPLES:
   nmap -v -iR 10000 -Pn -p 80
 SEE THE [MAN PAGE](https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
 
+## Scanning a "Local" Network
 
+In this context, we use the term "local" to refer to the network we are directly connected to, such as an Ethernet or WiFi network.
