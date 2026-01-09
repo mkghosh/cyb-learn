@@ -1,20 +1,29 @@
-# Identifying the hashing method
-We can use has-identifier to guess the hashing method or we can also use online tools like [hash-analyzer](https://www.tunnelsup.com/hash-analyzer/) or [hash-identification](https://www.onlinehashcrack.com/hash-identification.php) 
+# Crack the hashes
 
-## To install hash-identifier in debian based system (kali or parrot) 
+## Identifying the hashing method
+
+We can use has-identifier to guess the hashing method or we can also use online tools like [hash-analyzer](https://www.tunnelsup.com/hash-analyzer/) or [hash-identification](https://www.onlinehashcrack.com/hash-identification.php)
+
+## To install hash-identifier in debian based system (kali or parrot)
+
+```bash
 sudo apt install hash-identifier
+```
 
 ## Usage
+
 step 1: In terminal enter the command hash-identifier
 step 2: insert the hash in the prompt and press enter it will show the possible hashing method (i.e MD5, SHA1, etc)
 
+## Cracking Hash
 
-# Cracking Hash
 We can use hashcat to crack hash to install hashcat we can use udo apt install hashcat in debian systems. Or we can use online tools like [crackstation](https://crackstation.net/)
 
-Now cracing the hashs in [rack the hash](https://tryhackme.com/r/room/crackthehash) room of tryhackme. 
+Now cracing the hashs in [rack the hash](https://tryhackme.com/r/room/crackthehash) room of tryhackme.
 
-# Hash Types
+## Hash Types
+
+```txt
         0 = MD5
        10 = md5($pass.$salt)
        20 = md5($salt.$pass)
@@ -109,9 +118,11 @@ Now cracing the hashs in [rack the hash](https://tryhackme.com/r/room/cracktheha
        11200 = MySQL Challenge-Response Authentication (SHA1)
        11400 = SIP digest authentication (MD5)
        99999 = Plaintext
+```
 
 Level 1:
-# Hash-1: 48bb6e862e54f2a795ffc4e541caed4d
+
+\# Hash-1: 48bb6e862e54f2a795ffc4e541caed4d
 MD5
 
 Hash analyzer says this is MD5 hash so we will use hashcat with the md5 [hash mode](https://hashcat.net/wiki/doku.php?id=example_hashes)  
@@ -119,43 +130,53 @@ Hash analyzer says this is MD5 hash so we will use hashcat with the md5 [hash mo
 $hashcat -m 0 48bb6e862e54f2a795ffc4e541caed4d /usr/share/wordlists/rockyou.txt
 48bb6e862e54f2a795ffc4e541caed4d:easy
 
-# Hash-2: CBFDAC6008F9CAB4083784CBD1874F76618D2A97
+\# Hash-2: CBFDAC6008F9CAB4083784CBD1874F76618D2A97
+
 SHA-1 according to hash-identifier
 
-Command: 
+Command:
+
+```bash
 $hashcat -m 100 CBFDAC6008F9CAB4083784CBD1874F76618D2A97 /usr/share/wordlists/rockyou.txt
 cbfdac6008f9cab4083784cbd1874f76618d2a97:password123
+```
 
-# Hash-3: 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032
+\# Hash-3: 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032
 
 SHA256 or HAVAL-256
 Command :
 $hashcat -m 1400 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032 /usr/share/wordlists/rockyou.txt
-1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032:letmein 
+1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032:letmein
 
-# Hash-4: $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
-Not Found in hash-identifier
-bcrypt according to hash analyzer
+\# Hash-4: $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
 
-For this type of hash the pass could not be put directly in the command we need to save the hash in a file first 
+Not Found in hash-identifier, bcrypt according to hash analyzer
 
+For this type of hash the pass could not be put directly in the command we need to save the hash in a file first
+
+```bash
 vi bc.hash
 $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
 
 $hashcat -m 3200 bc.hash /usr/share/wordlists/rockyou.txt
+```
 
 As this type of hash cracking can take a lot of time I am going to limit my hashing to use only 4 lower case characters the command becomes
 
+```bash
 $hashcat -m 3200 bc.hash -1?l ?1?1?1?1
 $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom:bleh
+```
 
+\# Hash 5: 279412f945939ba78ce0758d3fd83daa
 
-
-# Hash 5: 279412f945939ba78ce0758d3fd83daa
 MD5 or MD4 according to both hash-identifier and hash-analyzer
 
 We will start with MD5
+
+```bash
 $hashcat -m 0 279412f945939ba78ce0758d3fd83daa /usr/share/wordlists/rockyou.txt
+```
 
 It Says exhausted so now we will try with MD4
 In my rockyou.txt MD4 also exhausted so I checked the writeups and found that the answer is not in my rockyou.txt file that is why it failed to crack then I tried with the crackstation and found the answer successfully.
