@@ -2,7 +2,13 @@
 
 ## Registration Pages
 
+# Common placess to Enumerate
+
+## Registration Pages
+
 - Web applications typically make the user registration process straightforward and informative by immediately indicating whether an email or username is available. While this feedback is designed to enhance user experience, it can inadvertently serve a dual purpose. If a registration attempt results in a message stating that a username or email is already taken, the application is unwittingly confirming its existence to anyone trying to register. Attackers exploit this feature by testing potential usernames or emails, thus compilling a list of active users without needing direct access to the underlying database.
+
+## Password Reset Features
 
 ## Password Reset Features
 
@@ -10,7 +16,11 @@
 
 ## Verbose Errors
 
+## Verbose Errors
+
 - Verbose error messages during login attempts or other interactive processes can reveal too much. When these messages differentiate between "username not found" and "incorrect password," they're intended to help users understand their login issues. However, they also provide attackers with definitive clues about valid usernames, which can be exploited for more targeted attacks.
+
+## Data Breach Information
 
 ## Data Breach Information
 
@@ -19,10 +29,19 @@
 ## Verbose errors can trun into a goldmine of information, providing insights such as
 
 - Internal Paths: Like a map leading to hidden treasure, these reveal the file paths and directory structures of the applicaiton server which might contain configuration files or secret keys that aren't visible to a normal user.
+## Verbose errors can trun into a goldmine of information, providing insights such as
 
+- Internal Paths: Like a map leading to hidden treasure, these reveal the file paths and directory structures of the applicaiton server which might contain configuration files or secret keys that aren't visible to a normal user.
+
+- Database Details: Offering a sneak peek into the database, these errors might spill secrets like table names and column details.
 - Database Details: Offering a sneak peek into the database, these errors might spill secrets like table names and column details.
 
 - User Information: Sometimes, these errors can even hint at usernames or other personal data, providing clues that are crucial for further investigation.
+- User Information: Sometimes, these errors can even hint at usernames or other personal data, providing clues that are crucial for further investigation.
+
+## Inducing Verbose Errors
+
+Attackers induce verbose errors as a way to force the application to reveal its secrets. Below are some common techinques used to provoke these errors:
 
 ## Inducing Verbose Errors
 
@@ -41,36 +60,55 @@ Attackers induce verbose errors as a way to force the application to reveal its 
 ## Password reset flow vulnerabilities
 
 - Password reset mechanism is an important part of user convenience in modern web applications. However, their implementation requires careful security considerations because poorly secured password reset processes can be easily expoited.
+## Password reset flow vulnerabilities
 
-1. Email-based reset:
-   - When a user resets their password, the application sends an email containing a reset link or a token to the user's registered email address. The user then clicks on this link, which directs them to a page where they can enter a new password and confirm it, or a system will automatically generate a new password for the user. This method relies heavily on the security of the user's email account and the secrecy of the link or token sent.
+- Password reset mechanism is an important part of user convenience in modern web applications. However, their implementation requires careful security considerations because poorly secured password reset processes can be easily expoited.
 
-2. Security Question-Based Reset:
-   - This involves the user answering a series of pre-configured security questions they had set up when creating their account. If the answers are correct, the systen allows the user to proceed with resetting their password. While this method adds a layer of security by requiring information only the user should know, it can be compromised if an attacker gains access to personally identifiable information (PII), which can sometimes be easily found or guessed.
+1. Email-based reset
 
-3. SMS-Based Reset:
-   - THis functions similarly to email-based reset but uses SMS to deliver a reset code or link directly to the user's mobile phone. Onece the user receives the codee, they can enter it on the provided webpage to access the password reset functionality. This method assumes that access to the user's mobile phone is secure, but it can be bulnerable to SIM swapping attacks or intercepts.
+- When a user resets their password, the application sends an email containing a reset link or a token to the user's registered email address. The user then clicks on this link, which directs them to a page where they can enter a new password and confirm it, or a system will automatically generate a new password for the user. This method relies heavily on the security of the user's email account and the secrecy of the link or token sent.
 
+2. Security Question-Based Reset
+
+- This involves the user answering a series of pre-configured security questions they had set up when creating their account. If the answers are correct, the systen allows the user to proceed with resetting their password. While this method adds a layer of security by requiring information only the user should know, it can be compromised if an attacker gains access to personally identifiable information (PII), which can sometimes be easily found or guessed.
+
+3. SMS-Based Reset
+
+- THis functions similarly to email-based reset but uses SMS to deliver a reset code or link directly to the user's mobile phone. Onece the user receives the codee, they can enter it on the provided webpage to access the password reset functionality. This method assumes that access to the user's mobile phone is secure, but it can be bulnerable to SIM swapping attacks or intercepts.
+
+Each of these methods has its own vulnerabilities:
 Each of these methods has its own vulnerabilities:
 
 - Predictable Tokens: If the reset tokens used in links or SMS messages are predictable or follow a sequential pattern, attackers might guess or brute-force their way to generate valid reset URLs.
+- Predictable Tokens: If the reset tokens used in links or SMS messages are predictable or follow a sequential pattern, attackers might guess or brute-force their way to generate valid reset URLs.
 
+- Token Expiration Issues: Tokens that remain valid for too long or don not expire immediately after use provide a window of opportunity for attackers. It's crucial that tokens expire swiftly to limit this window.
 - Token Expiration Issues: Tokens that remain valid for too long or don not expire immediately after use provide a window of opportunity for attackers. It's crucial that tokens expire swiftly to limit this window.
 
 - Insufficient Validation: THe mechanisms for verifying a user's identity, like security questions or email-based authentication, might be weak and susceptible to exploitation if the questions are too common or the email account is compromised.
+- Insufficient Validation: THe mechanisms for verifying a user's identity, like security questions or email-based authentication, might be weak and susceptible to exploitation if the questions are too common or the email account is compromised.
 
 - Information Disclosure: Any error message that specifies whether an email address or username is registered can inadvertently help attackers in their enumeration efforts, confirming the existence of accounts.
+- Information Disclosure: Any error message that specifies whether an email address or username is registered can inadvertently help attackers in their enumeration efforts, confirming the existence of accounts.
 
+- Insecure Transport: The transmission of reset links or tokens over non-HTTPS connections can expose these critical elements to interception by network eavesdroppers.
 - Insecure Transport: The transmission of reset links or tokens over non-HTTPS connections can expose these critical elements to interception by network eavesdroppers.
 
 To crack basic authentication we can use burpsuite or hydra with password lists from [this](https://github.com/danielmiessler/SecLists/tree/master/Passwords) github repository
 
 hydra usage
+
+```bash
 hydra -l (for specific user) -L (for user list) -p (for specific password) -P (for password lists) domain request type (http-get, http-post, ssh, ftp etc)
+```
 
 We can explore [wayback machine](https://web.archive.org) for previous versions of the site we are trying to test.
 
 Google dorks for finding unsecured urls password log files or backup sometimes
+
+- to find administrative panels: site:example.com inurl:admin
+- to unearth log files with passwords: filetype:log "password" site:example.com
+- to discover backup directories: intitile:"index of" "backup" site:example.com
 
 - to find administrative panels: site:example.com inurl:admin
 - to unearth log files with passwords: filetype:log "password" site:example.com
