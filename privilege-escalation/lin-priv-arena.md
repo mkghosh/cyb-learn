@@ -306,5 +306,7 @@ In target machine run ```/tmp/x```
 ## Resources
 
 [TryHackMe](https://tryhackme.com)
+
 [LegalHackers](https://legalhackers.com/)
+
 [GTFobins](https://gtfobins.github.io/)
