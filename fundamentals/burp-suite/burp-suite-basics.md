@@ -109,3 +109,43 @@ The Target tab in Burp Suite provides more than just control over the sope of ou
 3. Scope settings: This setting allows us to control the target scope in Burp Suite. It enables us to include or exclude specific domains/IPs to define the scope of our testing. By managing the scope, we can focus on the web applications we are specifically targeting and avoid capturing unnecessary traffic.
 
 Overall, the target tab offers features beyond scoping, allowing us to map out web applications, fine-tune our target scope, and access a comprehensive list of web vulnerabilities for reference purposes.
+
+## The Burp Suite Browser
+
+To start the Burp Browser, click the **Open Browser** button in the proxy tab. A Chromium window will pop up, and any request made in this browser will go through the proxy.
+
+**Note:** There are many settings related to the Burp Browser in the project options settings.
+
+However, if you are running Burp Suite on Linux as the root user, you may encounter an error preventing the Burp Browser from starting due to the inability to create a sandbox environment.
+
+There are two simple solutions to this:
+
+1. **Smart option:** Create a new user and run Burp Suite under a low-privilege account to allow the Burp Browser to run without issues.
+2. **Easy option:** Go to ```Setting --> Tools --> Burp's browser``` and check the ```Allow Burp's browser to run without a sandbox``` option. Enabling this option will allow the browser to start without a sandbox. However, please be aware that this option is disabled by default for security reasons. If you choose to enable it, exercise caution, as compromising the browser could grant an attacker access to your entire machine. in the training environment of the AttackBox, this is unlikely to be a significant issue, but use it responsibly.
+
+## Scoping and Targeting
+
+Finally, we come to one of the most important aspects of using the Burp Proxy: Scoping
+
+Capturing and logging all of the traffic can quickly become overwhelming and inconvenient, especially when we only want to focus on specific web applications. This is where scoping comes in.
+
+By setting a scope for the project, we can define what gets proxied and logged in Burp Suite. We can restrict Burp Suite to target only the specific web application(s) we want to test. The easiest way to do this is by switching to the Target tab, right-clicking on our target from the list on the left, and selecting **Add to Scope**. Burp will then prompt us to choose whether we want to stop logging anything that is not in scope, and in most cases, we want to select yes.
+
+To check our scope, we can switch to the Scope settings sub-tab within the Target tab. The Scope settings window allows us to control our target scope by including or excluding domains/IPs. This section is powerful and worth spending time getting familiar with.
+
+However, even if we disabled logging for out-of-scope traffic, the proxy will still intercept everything. To prevent this, we need to got to the Proxy settings sub-tab and select ```And URL is in target scope``` from the "Intercept Client Requests" section.
+
+Enabling this option ensures that the proxy completely ignores any traffic that is not within the defined scope, resulting in a cleaner traffic view in Burp Suite.
+
+## Proxying HTTPS
+
+When intercepting HTTP traffic, we may encounter an issue when navigating to sites with TLS enabled. For example, when accessing a site like https://google.com/, we may receive an error indicating that the PortSwigger Certificate Authority (CA) is not authorised to secure the connection. This happens because the browser does not trust the certificate presented by Burp Suite.
+
+To overcome this issue, we can manually add the PortSwigger CA certificate to our browser's list of trusted certificate authorities. Here's how to do it:
+
+1. Download the CA certificate: With Burp Proxy activated, navigate to http://burp/cert. This will download a file called cacert.der. Save this file somewhere on your machine.
+2. Access Firefox Certificate Settings: Type ```about:preferences``` into your firefox URL bar and press enter. This will take you to the Firefox settings page. Search the page for certificates and click on the View Certificates button.
+3. Import CA Certificate: In the Certificate Manager window, click on the import button. Select the cacert.der file that you downloaded earlier.
+4. Set Trust for the CA certificate: In the subsequent window that appears, check the box that says "Trust this CA to identify websites" and click OK.
+
+By completing these steps, we have added the PortSwigger CA certificate to our list of trusted certificate authorities. Now, we should be able to visit any TLS-enabled site without encountering the certificate error.
