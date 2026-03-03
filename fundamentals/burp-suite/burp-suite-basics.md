@@ -17,7 +17,6 @@ Burp Suite is abailable in different editions. For our purposes, we will focuss 
    - Access to the Burp Suite Collaborator (effectively providing a unique request catcher self-hosted on running on a Portswigger-owned server).
 
 In short, Burp Suite Professional is a highly potent tool, making it a preferred choice for professionals in the field.
-
 2. Burp Suite Enterprise, in contrast to the community and professional editions, is primarily utilized for continuous scanning. It features an automated scanner that periodically scans web applications for vulnerabilities, similar to how tools like Nessus perform automated infrastructure scanning. Unlike the other editions, which allow manual attacks from a local machine, Burp Suite Enterprise resides on a server and constantly scans the target web applications for potential vulnerabilities.
 
 ## Features of Burp Community
@@ -139,11 +138,11 @@ Enabling this option ensures that the proxy completely ignores any traffic that 
 
 ## Proxying HTTPS
 
-When intercepting HTTP traffic, we may encounter an issue when navigating to sites with TLS enabled. For example, when accessing a site like https://google.com/, we may receive an error indicating that the PortSwigger Certificate Authority (CA) is not authorised to secure the connection. This happens because the browser does not trust the certificate presented by Burp Suite.
+When intercepting HTTP traffic, we may encounter an issue when navigating to sites with TLS enabled. For example, when accessing a site like <https://google.com/>, we may receive an error indicating that the PortSwigger Certificate Authority (CA) is not authorised to secure the connection. This happens because the browser does not trust the certificate presented by Burp Suite.
 
 To overcome this issue, we can manually add the PortSwigger CA certificate to our browser's list of trusted certificate authorities. Here's how to do it:
 
-1. Download the CA certificate: With Burp Proxy activated, navigate to http://burp/cert. This will download a file called cacert.der. Save this file somewhere on your machine.
+1. Download the CA certificate: With Burp Proxy activated, navigate to <http://burp/cert>. This will download a file called cacert.der. Save this file somewhere on your machine.
 2. Access Firefox Certificate Settings: Type ```about:preferences``` into your firefox URL bar and press enter. This will take you to the Firefox settings page. Search the page for certificates and click on the View Certificates button.
 3. Import CA Certificate: In the Certificate Manager window, click on the import button. Select the cacert.der file that you downloaded earlier.
 4. Set Trust for the CA certificate: In the subsequent window that appears, check the box that says "Trust this CA to identify websites" and click OK.

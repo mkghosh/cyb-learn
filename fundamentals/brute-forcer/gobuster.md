@@ -11,6 +11,7 @@ We can get help text by entering command ```gobuster --help``` in the terminal.
 | | --delay | This flag defines the amount of time to wait between sending requests. Some web servers include mechanisms to detect enumeration by looking at how many requests are received in a certain period of time. We can increase the delay between subsequent requests to make it look like normal web traffic. |
 | | --debug | This flag helps us to troubleshoot when our command gives unexpected errors. |
 | -o | --output | This flag writes the enumeration results to a file we choose. |
+| | | |
 
 ## Example
 
@@ -42,6 +43,7 @@ If you want a complete overview of what the Gobuster dir command can offer, you 
 | -b | --status-codes-blacklist | This flag allows you to configure which status codes of the received responses you don’t want to display. Configuring this flag overrides the -s flag. |
 | -U | --username | You can set this flag together with the --password flag to execute authenticated requests. This is handy when you have obtained credentials from a user. |
 | -r | --followredirect | This flags configures Gobuster to follow the redirect that it received as a response to the sent request. A HTTP redirect status code (e.g., 301 or 302) is used to redirect the client to a different URL. |
+| | | |
 
 ### How to use dir mode
 
