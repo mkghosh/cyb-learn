@@ -9,5 +9,3 @@ Inspired by the military kill chains, the Cyber Kill Chain is a cyber security f
 - **Installation:** The exploitation enables the attacker to install a backdoor or malware to maintain persistence in the target’s environment
 - **Command & Control (C2):** Using the installed backdoor, the attacker can control the compromised system
 - **Actions on Objectives:** Reaching this far, the attacker can now carry out further actions such as data exfiltration or other systems’ exploitation
-
-
