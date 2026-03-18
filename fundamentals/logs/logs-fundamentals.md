@@ -291,3 +291,75 @@ Exploiting path traversal vulnerabilities allows attackers to access files and d
 It is important to note, like with the above examples, that directory traversals are often URL encoded (or double URL encoded) to avoid detection by firewalls or monitoring tools. Because of this, %2E and %2F are useful URL-encoded characters to know as they refer to the . and / respectively.
 
 In the below example, a directory traversal attempt can be identified by the repeated sequence of ../ characters, indicating that the attacker is attempting to "back out" of the web directory and access the sensitive /etc/passwd file on the server.
+
+## Log Analysis Tools : Command Line
+
+When analyzing collected logs, sometimes the most readily available tool we have is the command line itself. Analyzing logs through the command line provides a quick and powerful way to gain insights into system activities, troubleshoot issues, and detect security incidents, even if we don't have an SIEM system configured.
+
+Many built-in Linux commands allow us to parse and filter relevant information quickly. Viewing log files using the command line is one of the most basic yet essential tasks for conducting log analysis. Several common built-in tools are used for this purpose, offering differing functionalities to read and navigate through log files efficiently.
+
+### cat
+
+The cat command (short for "concatenate") is a simple utility that reads one or more files and displays its content in the terminal. When used for log files, it prints the entire log content to the screen.
+
+### less
+
+The less command is an improvement over cat when dealing with larger files. It allows you to view the file's data page by page, providing a more convenient way to read through lengthy logs. When using less to open a file, it displays the first page by default, and you can scroll down using the arrow keys or with Page Up and Page Down.
+
+### tail
+
+The tail command is specifically designed for viewing the end of files and is very useful for seeing a summary of recently generated events in the case of log files. The most common use of tail is coupled with the -f option, which allows you to "follow" the log file in real-time, as it continuously updates the terminal with new log entries as they are generated and written. This is extremely useful when monitoring logs for live events or real-time system behavior.
+
+By default, tail will only display the last ten lines of the file. However, we can change this with the -n option and specify the number of lines we want to view.
+
+### wc
+
+The wc (word count) command is a simple but powerful utility that can be quite useful for quick analysis and statistics gathering. The output of wc provides information about the number of lines, words, and characters in a log file. This can help security analysts understand the size and volume of log data they are dealing with before diving into a more detailed analysis.
+
+### cut
+
+The cut command extracts specific columns (fields) from files based on specified delimiters. This is a handy command for working with log files that have structured or tab-separated data.
+
+If we want to extract all of the IP addresses in the file, we can use the cut command to specify a delimiter of a space character and only select the first field returned.
+
+### sort
+
+Sometimes, it's helpful to sort the returned entries chronologically or alphabetically. The sort command arranges the data in files in ascending or descending order based on specific criteria. This can be crucial for identifying patterns, trends, or outliers in our log data. It is also common to combine the output of another command (cut, for example) and use it as the input of the sort command using the pipe | redirection character. ```cut -d " " -f 1 apache.log | sort -n```
+
+In the above command, we piped the output from cut into the sort command and added the ```-n``` option to sort numerically. This changed the output to list the IP addresses in ascending order.
+
+If we want to reverse the order, we can add the ```-r``` option: ```cut -d " " -f 1 apache.log | sort -n -r```
+
+### uniq
+
+The uniq command identifies and removes adjacent duplicate lines from sorted input. In the context of log analysis, this can be a useful tool for simplifying data lists (like collected IP addresses), especially when log entries may contain repeated or redundant information. The uniq command is often combined with the sort command to sort the data before removing the duplicate entries.
+
+For example, the output of the sort command we ran above contains a few duplicate IP addresses, which is easier to spot when the data is sorted numerically. To remove these repeatedly extracted IPs from the list, we can run:
+
+### sed
+
+Both sed and awk are powerful text-processing tools commonly used for log analysis. They are sometimes used interchangeably, but both commands have their use cases and can allow security analysts to manipulate, extract, and transform log data efficiently.
+
+Using the substitute syntax, sed can replace specific patterns or strings into log entries. For example, to replace all occurrences of "31/Jul/2023" with "July 31, 2023" in the apache.log file, we can use:
+
+Note that the backslash character \ is required to "escape" the forward slash in our pattern and tell sed to treat the forward slash as a literal character. Also, note that the sed command does not change the apache.log file directly; instead, it only outputs the modified version of the file to the standard output in the command line. If you want to overwrite the file, you can add the -i option to edit the file in place or use a redirect operator > to save the output to the original or another file.
+
+Caution: If you use the -i option with sed, you risk overwriting the original file and losing valuable data. Ensure to keep a backup copy!
+
+### awk
+
+For the awk command, a common use case, is conditional actions based on specific field values. For example, to print log entries where the HTTP response code is greater than or equal to 400 (which would indicate HTTP error statuses), we can use the following command:
+
+### grep
+
+The grep command is a powerful text search tool widely used on UNIX systems and provides exceptional use cases in log analysis. It allows you to search for specific patterns or regular expressions within files or streams of text. Using grep can help analysts quickly identify relevant log entries that match specific criteria, particular resources or keywords, or patterns associated with security incidents.
+
+The most basic usage of grep is to search for specific strings within log files. For example, if we are suspicious about any log entries that hit the /admin.php webpage on the server, we can grep for "admin" to return any relevant results:
+
+Like the uniq -c command, we can append the -c option to grep to count the entries matching the search criteria. For example, because only a single line was returned in the above command, appending -c will return "1".
+
+If we wanted to know which line number in the log file relates to the matched entries, we could add the -n option to help quickly locate specific occurrences:
+
+In this case, the line number "37" is prepended to the log entry output.
+
+Lastly, we can invert our command using the -v option only to select lines that do not contain the specified pattern or keyword(s). This can be useful for quickly filtering out unwanted or irrelevant lines from log files. For example, if we're not interested in any log entries that hit the /index.php page, we can run the following command to filter it out:
